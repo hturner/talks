@@ -120,6 +120,9 @@ We can use `qvcalc` to compute comparison intervals for all items
 ```{r qvcalc}
 qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
+```
+
+```{r qvcalc-makeLink, results = "asis", echo = FALSE}
 makeLink("qvcalc", title = "Worth of movies in Netflix data",
          alt = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.", width = 300)
 ```
@@ -168,7 +171,7 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "300px", echo = FALSE}
+```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "300px", echo = FALSE, results = "asis"}
 par(mar = rep(1, 4))
 library(igraph)
 R <- matrix(c(1, 2, 0, 0,
@@ -189,7 +192,7 @@ makeLink("always loses", title = "Network in which one item always loses",
 
 @div[right-50]
 
-```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "300px", echo = FALSE}
+```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "300px", echo = FALSE, results = "asis"}
 par(mar = rep(1, 4))
 R <- matrix(c(1, 2, 0, 0, 0, 
               2, 0, 1, 0, 0,
@@ -229,7 +232,7 @@ makeLink("disconnect", title = "Disconnected Network",
 
 @div[right-50]
 
-```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE}
+```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE, results = "asis"}
 par(mar = rep(1, 4))
 R <- matrix(c(0, 0, 0, 1, 2,
               0, 0, 0, 2, 1,
