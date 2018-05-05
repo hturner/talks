@@ -214,5 +214,7 @@ the worth cannot be estimated by maximum likelihood.
 
 ![plot of chunk pseudo-rankings](figure/pseudo-rankings-1.svg)
 
+<img src="https://github.com/hturner/talks/blob/eRum2018/figure/pseudo-rankings-1.svg" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
+
 @divend
 
