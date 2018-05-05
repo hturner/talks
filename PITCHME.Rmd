@@ -184,7 +184,7 @@ R <- as.rankings(R)
 A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
-makeLink("always loses", title = "Network in which one item always loses",
+makeLink("always-loses", title = "Network in which one item always loses",
          alt = "Network in which one item always loses", width = 300)
 ```
 
@@ -205,7 +205,7 @@ A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30,
      frame = TRUE)
-makeLink("disconnect", title = "Disconnected Network",
+makeLink("disconnected", title = "Disconnected Network",
          alt = "Network with two separate groups of items, that are only observed to win or lose against other items in theor group", width = 300)
 ```
 
