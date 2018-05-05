@@ -2,6 +2,6 @@ charts : true
 mathjax : TeX-AMS_HTML-full
 layout : top-left
 theme-override : assets/css/PITCHME.css
-highlight : github-gist
+highlight : googlecode
 transition : none
 published : true

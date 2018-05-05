@@ -1,10 +1,11 @@
 ---
-
+<center>
 # @color[#4286f4](Modelling Item Worth Based on Rankings)
 
 @color[#ffffff](Heather Turner)
 
 @color[#ffffff](May 15 2018)
+</center>
 
 
 
@@ -69,13 +70,13 @@ netflix <- read.soc(file.path(preflib,
 head(netflix, 2)
 ```
 
-```r
+```
 ##    n Rank 1 Rank 2 Rank 3 Rank 4
 ## 1 68      2      1      4      3
 ## 2 53      1      2      4      3
 ```
 
----
++++
 
 ### Convert to Rankings
 
@@ -92,7 +93,7 @@ colnames(R) <- attr(netflix, "item")
 print(R[1:3], width = 60)
 ```
 
-```r
+```
 ##                                                              1 
 ## "Beverly Hills Cop > Mean Girls > Mission: Impossible II  ..." 
 ##                                                              2 
@@ -123,3 +124,91 @@ coef(mod, log = FALSE)
 
 These coefficients are the *worth* parameters and represent the 
 probability that each movie is ranked first.
+
+---
+
+### Inference
+
+For inference it is better to compare worth parameters on the 
+log scale. We must set one item as the reference (log-worth = 0).
+
+`qvcalc` enables us to compute comparison intervals for 
+all items
+
+
+```r
+qv <- qvcalc(mod)
+plot(qv, ylab = "Worth (log)", main = NULL)
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+
+---
+
+## Ranking properties
+
+The Netflix rankings are an example of *strict*, *complete*
+rankings.
+
+In other applications we might have
+ * tied ranks
+ * incomplete rankings
+     1. each ranking only contains some items
+     2. only the top $n$ items are ranked
+     
+**PlackettLuce** implements a generalized model which handles 
+ties and incomplete rankings of type 1.
+
+---
+
+## Generalized Model
+
+A ranking is now an ordering of sets 
+
+$C_1 \succ C_2 \succ \ldots \succ C_J$
+
+and the generalized model with ties up to order $D$ is
+
+$$
+\prod_{j = 1}^J \frac{f(C_j)}{
+\sum_{k = 1}^{\min(D_j, D)} \sum_{S \in {A_j \choose k}} f(S)}
+$$
+where
+
+$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$
+
+---
+
+## Ranking Networks
+
+In some cases, the underlying network of wins and losses means 
+the worth cannot be estimated by maximum likelihood.
+
+<img src="figure/always-loses-1.png" title="plot of chunk always-loses" alt="plot of chunk always-loses" width="50%" /><img src="figure/always-loses-2.png" title="plot of chunk always-loses" alt="plot of chunk always-loses" width="50%" />
+
+---
+
+## Pseudo-rankings
+
+**PlackettLuce** connects the network by adding `npseudo` 
+*pseudo-rankings* with a ghost item.
+
+@div[left-50]
+
+<br><br>
+
+@ul
+- The MLE is always estimable
+- Can be viewed as a Bayesian prior
+- Default `nspeudo = 0.5`
+@ulend
+
+@divend
+
+@div[right-50]
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+
+
+@divend
+

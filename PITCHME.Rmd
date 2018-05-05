@@ -10,6 +10,7 @@
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE)
+knit_hooks$set(crop = hook_pdfcrop)
 ```
 
 ---
@@ -72,7 +73,7 @@ netflix <- read.soc(file.path(preflib,
 head(netflix, 2)
 ```
 
----
++++
 
 ### Convert to Rankings
 
@@ -102,3 +103,134 @@ coef(mod, log = FALSE)
 
 These coefficients are the *worth* parameters and represent the 
 probability that each movie is ranked first.
+
+---
+
+### Inference
+
+For inference it is better to compare worth parameters on the 
+log scale. We must set one item as the reference (log-worth = 0).
+
+`qvcalc` enables us to compute comparison intervals for 
+all items
+
+```{r}
+qv <- qvcalc(mod)
+plot(qv, ylab = "Worth (log)", main = NULL)
+```
+
+---
+
+## Ranking properties
+
+The Netflix rankings are an example of *strict*, *complete*
+rankings.
+
+In other applications we might have
+ * tied ranks
+ * incomplete rankings
+     1. each ranking only contains some items
+     2. only the top $n$ items are ranked
+     
+**PlackettLuce** implements a generalized model which handles 
+ties and incomplete rankings of type 1.
+
+---
+
+## Generalized Model
+
+A ranking is now an ordering of sets 
+
+$C_1 \succ C_2 \succ \ldots \succ C_J$
+
+and the generalized model with ties up to order $D$ is
+
+$$
+\prod_{j = 1}^J \frac{f(C_j)}{
+\sum_{k = 1}^{\min(D_j, D)} \sum_{S \in {A_j \choose k}} f(S)}
+$$
+where
+
+$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$
+
+---
+
+## Ranking Networks
+
+In some cases, the underlying network of wins and losses means 
+the worth cannot be estimated by maximum likelihood.
+
+```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "50%", echo = FALSE}
+par(mar = rep(1, 4))
+library(igraph)
+R <- matrix(c(1, 2, 0, 0,
+              2, 0, 1, 0,
+              1, 0, 0, 2,
+              2, 1, 0, 0,
+              0, 1, 2, 0), byrow = TRUE, ncol = 4,
+            dimnames = list(NULL, LETTERS[1:4]))
+R <- as.rankings(R)
+A <- adjacency(R)
+net <- graph_from_adjacency_matrix(A)
+plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
+
+R <- matrix(c(1, 2, 0, 0, 0, 
+              2, 0, 1, 0, 0,
+              0, 1, 2, 0, 0,
+              0, 0, 0, 1, 2,
+              0, 0, 0, 2, 1), byrow = TRUE, ncol = 5,
+            dimnames = list(NULL, LETTERS[1:5]))
+R <- as.rankings(R)
+A <- adjacency(R)
+net <- graph_from_adjacency_matrix(A)
+plot(net, edge.arrow.size = 0.5, vertex.size = 30,
+     frame = TRUE)
+```
+
+---
+
+## Pseudo-rankings
+
+**PlackettLuce** connects the network by adding `npseudo` 
+*pseudo-rankings* with a ghost item.
+
+@div[left-50]
+
+<br><br>
+
+@ul
+- The MLE is always estimable
+- Can be viewed as a Bayesian prior
+- Default `nspeudo = 0.5`
+@ulend
+
+@divend
+
+@div[right-50]
+
+```{r, fig.width = 3.5, fig.height = 3.5, echo = FALSE}
+R <- matrix(c(0, 0, 0, 1, 2,
+              0, 0, 0, 2, 1,
+              0, 0, 1, 0, 2,
+              0, 0, 2, 0, 1,
+              0, 1, 0, 0, 2,
+              0, 2, 0, 0, 1,
+              1, 0, 0, 0, 2,
+              2, 0, 0, 0, 1,
+              1, 2, 0, 0, 0,
+              2, 0, 1, 0, 0,
+              1, 0, 0, 2, 0,
+              2, 1, 0, 0, 0,
+              0, 1, 2, 0, 0), byrow = TRUE, ncol = 5,
+            dimnames = list(NULL, c(LETTERS[1:4], "G")))
+R <- as.rankings(R)
+A <- adjacency(R)
+net <- graph_from_adjacency_matrix(A)
+V(net)$color <- c(rep("#E69F00", 4), "#84aae8")
+plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
+
+```
+
+
+@divend
+

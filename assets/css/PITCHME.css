@@ -8,7 +8,14 @@
     display: block;
     position: relative;
     width: 70%;
-    margin: 20px auto;
+    margin: 0 auto;
+    text-align: center;
     font-style: italic;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.reveal .slides section blockquote p {
+    margin: 0;
+    display: inline-block;
+    padding: 0;
 }
