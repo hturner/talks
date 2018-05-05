@@ -1,4 +1,14 @@
-.reveal ul {
+/* https://github.com/gitpitch/gitpitch/blob/master/public/libs/reveal.js/3.6.0/css/theme/white.css */
+.reveal .slides ul {
     display: inline-block;
     text-align: left;
     margin: 0 0 0 40px; }
+
+.reveal .slides section blockquote {
+    display: block;
+    position: relative;
+    width: 70%;
+    margin: 20px auto;
+    font-style: italic;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
