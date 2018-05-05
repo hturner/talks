@@ -204,9 +204,11 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
+@ul
 - The MLE is always estimable
 - Can be viewed as a Bayesian prior
 - Default `nspeudo = 0.5`
+@ulend
 
 @divend
 
@@ -214,7 +216,7 @@ the worth cannot be estimated by maximum likelihood.
 
 ![plot of chunk pseudo-rankings](figure/pseudo-rankings-1.svg)
 
-<img src="https://raw.githubusercontent.com/hturner/talks/eRum2018/figure/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
+<img src="https://raw.githubusercontent.com/hturner/test/master/figure/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
 
 @divend
 
