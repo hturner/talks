@@ -1,4 +1,5 @@
-theme : black
 charts : true
 mathjax : TeX-AMS_HTML-full
+layout : top-right
+transition : none
 published : true

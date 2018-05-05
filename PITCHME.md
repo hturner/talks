@@ -1,10 +1,11 @@
 ---
-
+<center>
 # @color[#4286f4](Modelling Item Worth Based on Rankings)
 
 @color[#ffffff](Heather Turner)
 
 @color[#ffffff](May 15 2018)
+</center>
 
 
 
@@ -27,12 +28,13 @@ What is the worth of each item?
 
 Suppose we have a set of $J$ items
 
-$$S = \{i_1, i_2, \ldots, i_J\}.$$
+$$S = \{i_1, i_2, \ldots, i_J\}$$
 
 Then under Luce's axiom
 
-$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$
-where $\alpha_i$ represents the **worth** of item $i$.
+`$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$`
+
+where `$\alpha_i$` represents the **worth** of item $i$.
 
 ---
 
@@ -42,7 +44,7 @@ Consider a ranking of $J$ items as a sequence of choices.
 
 The *Plackett-Luce* model is then
 
-$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$
+`$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$`
 
 where $A_j$ is the set of alternatives in choice $j$.
 
@@ -91,7 +93,7 @@ colnames(R) <- attr(netflix, "item")
 print(R[1:3], width = 60)
 ```
 
-```
+```r
 ##                                                              1 
 ## "Beverly Hills Cop > Mean Girls > Mission: Impossible II  ..." 
 ##                                                              2 
