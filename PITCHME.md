@@ -1,11 +1,11 @@
 ---
-<center>
-# @color[#4286f4](Modelling Item Worth Based on Rankings)
+
+# @color[#4286f4]@size[3em](Modelling Item Worth Based on Rankings)
 
 @color[#ffffff](Heather Turner)
 
 @color[#ffffff](May 15 2018)
-</center>
+
 
 
 
@@ -139,7 +139,14 @@ qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
 ```
 
-![plot of chunk qvcalc](figure/qvcalc-1.svg)
+```r
+makeLink("qvcalc", title = "Worth of movies in Netflix data",
+         alt = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.", width = 300)
+```
+
+```
+# <img src="https://raw.githubusercontent.com/hturner/test/master/qvcalc-1.svg?sanitize=true" title="Worth of movies in Netflix data" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies." width="300px" />
+```
 
 ---
 
@@ -185,13 +192,25 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-<img src="figure/always-loses-1.svg" title="plot of chunk always-loses" alt="plot of chunk always-loses" width="300px" />
+
+```
+# <img src="https://raw.githubusercontent.com/hturner/test/master/always loses-1.svg?sanitize=true" title="Network in which one item always loses" alt="Network in which one item always loses" width="300px" />
+```
+
+<img src="../talks-svg/eRum2018/always-loses-1.svg" title="plot of chunk always-loses" alt="plot of chunk always-loses" width="300px" />
 
 @divend
 
 @div[right-50]
 
-<img src="figure/disconnected-1.svg" title="plot of chunk disconnected" alt="plot of chunk disconnected" width="300px" />
+
+```
+# <img src="https://raw.githubusercontent.com/hturner/test/master/disconnect-1.svg?sanitize=true" title="Disconnected Network" alt="Network with two separate groups of items, that are only observed to win or lose against other items in theor group" width="300px" />
+```
+
+<img src="../talks-svg/eRum2018/disconnected-1.svg" title="plot of chunk disconnected" alt="plot of chunk disconnected" width="300px" />
+
+
 
 @divend
 
@@ -204,18 +223,22 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-<ul>
+@ul
 - The MLE is always estimable
 - Can be viewed as a Bayesian prior
 - Default `nspeudo = 0.5`
+@ulend
 
 @divend
 
 @div[right-50]
 
 
+```
+# <img src="https://raw.githubusercontent.com/hturner/test/master/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
+```
 
-<img src="https://raw.githubusercontent.com/hturner/test/master/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
+
 
 @divend
 

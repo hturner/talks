@@ -1,15 +1,21 @@
 ---
-<center>
-# @color[#4286f4](Modelling Item Worth Based on Rankings)
+
+# @color[#4286f4]@size[3em](Modelling Item Worth Based on Rankings)
 
 @color[#ffffff](Heather Turner)
 
 @color[#ffffff](May 15 2018)
-</center>
+
 
 ```{r setup, include=FALSE}
 library(knitr)
-opts_chunk$set(echo = TRUE, dev = "svg", comment = "#")
+opts_chunk$set(echo = TRUE, fig.path = "../talks-svg/eRum2018/",
+               fig.show = "hide", dev = "svg", comment = "#")
+makeLink <- function(label, title, alt, width){
+    cat('<img src="https://raw.githubusercontent.com/hturner/test/master/',
+        label, '-1.svg?sanitize=true" title="', 
+        title, '" alt="', alt, '" width="', width, 'px" />', sep = "")
+}               
 ```
 
 ---
@@ -114,6 +120,8 @@ We can use `qvcalc` to compute comparison intervals for all items
 ```{r qvcalc}
 qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
+makeLink("qvcalc", title = "Worth of movies in Netflix data",
+         alt = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.", width = 300)
 ```
 
 ---
@@ -173,6 +181,8 @@ R <- as.rankings(R)
 A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
+makeLink("always loses", title = "Network in which one item always loses",
+         alt = "Network in which one item always loses", width = 300)
 ```
 
 @divend
@@ -192,7 +202,11 @@ A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30,
      frame = TRUE)
+makeLink("disconnect", title = "Disconnected Network",
+         alt = "Network with two separate groups of items, that are only observed to win or lose against other items in theor group", width = 300)
 ```
+
+
 
 @divend
 
@@ -205,16 +219,17 @@ plot(net, edge.arrow.size = 0.5, vertex.size = 30,
 
 @div[left-50]
 
-<ul>
+@ul
 - The MLE is always estimable
 - Can be viewed as a Bayesian prior
 - Default `nspeudo = 0.5`
+@ulend
 
 @divend
 
 @div[right-50]
 
-```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE, fig.show = "hide"}
+```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE}
 par(mar = rep(1, 4))
 R <- matrix(c(0, 0, 0, 1, 2,
               0, 0, 0, 2, 1,
@@ -235,10 +250,11 @@ A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 V(net)$color <- c(rep("#E69F00", 4), "#84aae8")
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
-
+makeLink("pseudo-rankings", title = "Network with pseudo-rankings",
+         alt = "Network with pseudo-rankings, in which each item wins and loses against ghost item", width = 300)
 ```
 
-<img src="https://raw.githubusercontent.com/hturner/test/master/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
+
 
 @divend
 
