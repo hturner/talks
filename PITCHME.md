@@ -1,8 +1,4 @@
 ---
-background-color: black
----
-
----
 @title[Title slide]
 
 # @color[#4286f4](Modelling Item Worth Based on Rankings)
@@ -25,7 +21,7 @@ for (i in 1:3){
 ---
 @title[R output]
 
-```
+```lang=r
 Analysis of Variance Table
 
 Response: weight
