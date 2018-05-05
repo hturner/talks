@@ -12,7 +12,7 @@ library(knitr)
 opts_chunk$set(echo = TRUE, fig.path = "../talks-svg/eRum2018/",
                fig.show = "hide", dev = "svg", comment = "#")
 makeLink <- function(label, title, alt, width){
-    cat('<img src="https://raw.githubusercontent.com/hturner/test/master/',
+    cat('<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/',
         label, '-1.svg?sanitize=true" title="', 
         title, '" alt="', alt, '" width="', width, 'px" />', sep = "")
 }               
