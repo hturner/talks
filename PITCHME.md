@@ -216,7 +216,7 @@ the worth cannot be estimated by maximum likelihood.
 
 ![plot of chunk pseudo-rankings](figure/pseudo-rankings-1.svg)
 
-<img src="https://raw.githubusercontent.com/hturner/test/master/figure/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
+<img src="https://raw.githubusercontent.com/hturner/test/master/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
 
 @divend
 
