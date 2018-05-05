@@ -185,13 +185,13 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/always-loses-1.svg?sanitize=true" title="Network in which one item always loses" alt="Network in which one item always loses" width="300px" /><img src="../talks-svg/eRum2018/always-loses-1.svg" title="plot of chunk always-loses" alt="plot of chunk always-loses" width="300px" />
+<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/always-loses-1.svg?sanitize=true" title="Network in which one item always loses" alt="Network in which one item always loses" width="300px" />
 
 @divend
 
 @div[right-50]
 
-<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/disconnected-1.svg?sanitize=true" title="Disconnected Network" alt="Network with two separate groups of items, that are only observed to win or lose against other items in theor group" width="300px" /><img src="../talks-svg/eRum2018/disconnected-1.svg" title="plot of chunk disconnected" alt="plot of chunk disconnected" width="300px" />
+<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/disconnected-1.svg?sanitize=true" title="Disconnected Network" alt="Network with two separate groups of items, that are only observed to win or lose against other items in theor group" width="300px" />
 
 
 

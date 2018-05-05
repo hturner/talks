@@ -171,7 +171,7 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "300px", echo = FALSE, results = "asis"}
+```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis"}
 par(mar = rep(1, 4))
 library(igraph)
 R <- matrix(c(1, 2, 0, 0,
@@ -192,7 +192,7 @@ makeLink("always-loses", title = "Network in which one item always loses",
 
 @div[right-50]
 
-```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, fig.show = "hold", out.width = "300px", echo = FALSE, results = "asis"}
+```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis"}
 par(mar = rep(1, 4))
 R <- matrix(c(1, 2, 0, 0, 0, 
               2, 0, 1, 0, 0,
