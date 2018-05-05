@@ -14,8 +14,8 @@
 
 Rankings arise in a number of settings
 
-    * Finishing order in a set of races
-    * Consumer preferences in market research
+ - Finishing order in a set of races
+ - Consumer preferences in market research
  
 What is the worth of each item?
 
