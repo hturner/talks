@@ -1,11 +1,10 @@
 ---
-<center>
+
 # @color[#4286f4](Modelling Item Worth Based on Rankings)
 
 @color[#ffffff](Heather Turner)
 
 @color[#ffffff](May 15 2018)
-</center>
 
 
 
@@ -70,7 +69,7 @@ netflix <- read.soc(file.path(preflib,
 head(netflix, 2)
 ```
 
-```
+```r
 ##    n Rank 1 Rank 2 Rank 3 Rank 4
 ## 1 68      2      1      4      3
 ## 2 53      1      2      4      3
