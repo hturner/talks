@@ -1,4 +1,4 @@
-background-color : #74992e;
+theme : black
 charts : true
 mathjax : TeX-AMS_HTML-full
 published : true
