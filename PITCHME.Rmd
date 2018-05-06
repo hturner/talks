@@ -1,21 +1,22 @@
 ---
 
-# @color[#4286f4]@size[3em](Modelling Item Worth Based on Rankings)
+@color[#4286f4](@size[1em](Modelling Item Worth Based on Rankings))
 
-@color[#ffffff](Heather Turner)
+*Heather Turner*, Freelance/University of Warwick, UK
+Jacob van Etten, Bioversity International, Costa Rica
+David Firth, University of Warwick/Alan Turing Institute, UK
+Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
 
-@color[#ffffff](May 15 2018)
+May 15 2018
 
 
 ```{r setup, include=FALSE}
 library(knitr)
-opts_chunk$set(echo = TRUE, fig.path = "../talks-svg/eRum2018/",
-               fig.show = "hide", dev = "svg", comment = "#")
-makeLink <- function(label, title, alt, width){
-    cat('<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/',
-        label, '-1.svg?sanitize=true" title="', 
-        title, '" alt="', alt, '" width="', width, 'px" />', sep = "")
-}               
+opts_chunk$set(echo = TRUE, dev = "png", dpi = 300,
+               comment = "#")
+knit_hooks$set(output = function(x, options) {
+    paste("```r\n", x, "```\n", sep = "")
+})           
 ```
 
 ---
@@ -117,14 +118,9 @@ For inference it is better to work on the log scale. We must set one item as the
 
 We can use `qvcalc` to compute comparison intervals for all items
 
-```{r qvcalc}
+```{r qvcalc, fig.cap = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies."}
 qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
-```
-
-```{r qvcalc-makeLink, results = "asis", echo = FALSE}
-makeLink("qvcalc", title = "Worth of movies in Netflix data",
-         alt = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.", width = 300)
 ```
 
 ---
@@ -171,7 +167,7 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis"}
+```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis", fig.cap = "Network in which one item always loses"}
 par(mar = rep(1, 4))
 library(igraph)
 R <- matrix(c(1, 2, 0, 0,
@@ -184,15 +180,13 @@ R <- as.rankings(R)
 A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
-makeLink("always-loses", title = "Network in which one item always loses",
-         alt = "Network in which one item always loses", width = 300)
 ```
 
 @divend
 
 @div[right-50]
 
-```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis"}
+```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis", fig.cap = "Network with two separate groups of items, that are only observed to win or lose against other items in their group"}
 par(mar = rep(1, 4))
 R <- matrix(c(1, 2, 0, 0, 0, 
               2, 0, 1, 0, 0,
@@ -205,8 +199,6 @@ A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30,
      frame = TRUE)
-makeLink("disconnected", title = "Disconnected Network",
-         alt = "Network with two separate groups of items, that are only observed to win or lose against other items in theor group", width = 300)
 ```
 
 
@@ -232,7 +224,7 @@ makeLink("disconnected", title = "Disconnected Network",
 
 @div[right-50]
 
-```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE, results = "asis"}
+```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE, results = "asis", fig.cap = "Network with pseudo-rankings, in which each item wins and loses against ghost item"}
 par(mar = rep(1, 4))
 R <- matrix(c(0, 0, 0, 1, 2,
               0, 0, 0, 2, 1,
@@ -253,11 +245,98 @@ A <- adjacency(R)
 net <- graph_from_adjacency_matrix(A)
 V(net)$color <- c(rep("#E69F00", 4), "#84aae8")
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
-makeLink("pseudo-rankings", title = "Network with pseudo-rankings",
-         alt = "Network with pseudo-rankings, in which each item wins and loses against ghost item", width = 300)
 ```
-
-
 
 @divend
 
+---
+
+## Heterogeneity
+
+The worth of items may vary with the ranking conditions, e.g. 
+judge making the ranking.
+
+**PlackettLuce** works with **partykit** to fit *Plackett-Luce trees*
+
+1. Fit Plackett-Luce to all the data.
+2. Test stability of worth parameters w.r.t. each covariate.
+3. If significant instability, split data by relevant covariate.
+4. Repeat 1-3 until no significant instability/split makes 
+sub-group too small.
+
+---
+
+## Example 2: Beans
+
+Data from a citizen science trial of bean varieties in Nicaragua:
+
+ - 11 bean varieties 
+ - Each farmer grew 3 varieties
+     - Asked which was best and which was worst
+     - Asked to compare each to variety to local variety
+ - Covariates on growing conditions, including
+     - Growing season (Primera, Postrera, Apante)
+     - Year
+     - Maximum night-time temperature
+     
++++
+
+### Example 2: Beans
+
+The example on `?beans` tidies the original data
+```{r}
+example("beans", package = "PlackettLuce", echo = FALSE)
+```
+
+The original data are organised with one row per farm/farmer
+```{r}
+dim(beans)
+names(beans)
+```
+
+The 3-way and 2-way rankings are collated in a rankings object
+
+```{r}
+dim(R)
+R[1,]
+R[3368,]
+```
+
++++
+
+### Plackett-Luce Tree
+
+The rankings are grouped by farm/farmer
+
+```{r}
+G <- grouped_rankings(R, rep(seq_len(nrow(beans)), 4))
+format(head(G, 2), width = 50)
+```
+
+A tree with max depth 3 and at least 5% records in each group
+
+```{r, cache = TRUE}
+beans$year <- factor(beans$year)
+tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
+               minsize = 0.05*n, maxdepth = 3)
+```
+
++++
+
+### Plotting Tree
+
+```{r, results = "none", fig.width = 10, echo = FALSE}
+plot(tree, names = FALSE, abbreviate = 2)
+```
+
+---
+
+## Summary
+
+Future work
+ - Incorporating spatial effects
+ - Incorporating genotype information
+ 
+More details
+ - **PlackettLuce** is on CRAN and GitHub
+ - Full details of the methods and further examples in the vignette

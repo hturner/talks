@@ -1,10 +1,13 @@
 ---
 
-# @color[#4286f4]@size[3em](Modelling Item Worth Based on Rankings)
+@color[#4286f4](@size[1em](Modelling Item Worth Based on Rankings))
 
-@color[#ffffff](Heather Turner)
+*Heather Turner*, Freelance/University of Warwick, UK
+Jacob van Etten, Bioversity International, Costa Rica
+David Firth, University of Warwick/Alan Turing Institute, UK
+Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
 
-@color[#ffffff](May 15 2018)
+May 15 2018
 
 
 
@@ -70,7 +73,7 @@ netflix <- read.soc(file.path(preflib,
 head(netflix, 2)
 ```
 
-```
+```r
 #    n Rank 1 Rank 2 Rank 3 Rank 4
 # 1 68      2      1      4      3
 # 2 53      1      2      4      3
@@ -93,7 +96,7 @@ colnames(R) <- attr(netflix, "item")
 print(R[1:3], width = 60)
 ```
 
-```
+```r
 #                                                              1 
 # "Beverly Hills Cop > Mean Girls > Mission: Impossible II  ..." 
 #                                                              2 
@@ -115,7 +118,7 @@ mod <- PlackettLuce(R, weights = netflix$n)
 coef(mod, log = FALSE)
 ```
 
-```
+```r
 #             Mean Girls      Beverly Hills Cop      The Mummy Returns 
 #              0.2306285              0.4510655              0.1684719 
 # Mission: Impossible II 
@@ -139,7 +142,7 @@ qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
 ```
 
-<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/qvcalc-1.svg?sanitize=true" title="Worth of movies in Netflix data" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies." width="300px" />
+![Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.](figure/qvcalc-1.png)
 
 ---
 
@@ -185,13 +188,13 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[left-50]
 
-<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/always-loses-1.svg?sanitize=true" title="Network in which one item always loses" alt="Network in which one item always loses" width="300px" />
+<img src="figure/always-loses-1.png" title="Network in which one item always loses" alt="Network in which one item always loses" width="300px" />
 
 @divend
 
 @div[right-50]
 
-<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/disconnected-1.svg?sanitize=true" title="Disconnected Network" alt="Network with two separate groups of items, that are only observed to win or lose against other items in theor group" width="300px" />
+<img src="figure/disconnected-1.png" title="Network with two separate groups of items, that are only observed to win or lose against other items in their group" alt="Network with two separate groups of items, that are only observed to win or lose against other items in their group" width="300px" />
 
 
 
@@ -216,9 +219,140 @@ the worth cannot be estimated by maximum likelihood.
 
 @div[right-50]
 
-<img src="https://raw.githubusercontent.com/hturner/talks-svg/master/eRum2018/pseudo-rankings-1.svg?sanitize=true" title="Network with pseudo-rankings" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item" width="300px" />
-
-
+![Network with pseudo-rankings, in which each item wins and loses against ghost item](figure/pseudo-rankings-1.png)
 
 @divend
 
+---
+
+## Heterogeneity
+
+The worth of items may vary with the ranking conditions, e.g. 
+judge making the ranking.
+
+**PlackettLuce** works with **partykit** to fit *Plackett-Luce trees*
+
+1. Fit Plackett-Luce to all the data.
+2. Test stability of worth parameters w.r.t. each covariate.
+3. If significant instability, split data by relevant covariate.
+4. Repeat 1-3 until no significant instability/split makes 
+sub-group too small.
+
+---
+
+## Example 2: Beans
+
+Data from a citizen science trial of bean varieties in Nicaragua:
+
+ - 11 bean varieties 
+ - Each farmer grew 3 varieties
+     - Asked which was best and which was worst
+     - Asked to compare each to variety to local variety
+ - Covariates on growing conditions, including
+     - Growing season (Primera, Postrera, Apante)
+     - Year
+     - Maximum night-time temperature
+     
++++
+
+### Example 2: Beans
+
+The example on `?beans` tidies the original data
+
+```r
+example("beans", package = "PlackettLuce", echo = FALSE)
+```
+
+The original data are organised with one row per farm/farmer
+
+```r
+dim(beans)
+```
+
+```r
+# [1] 842  12
+```
+
+```r
+names(beans)
+```
+
+```r
+#  [1] "variety_a" "variety_b" "variety_c"
+#  [4] "best"      "worst"     "var_a"    
+#  [7] "var_b"     "var_c"     "season"   
+# [10] "year"      "maxTN"     "middle"
+```
+
+The 3-way and 2-way rankings are collated in a rankings object
+
+
+```r
+dim(R)
+```
+
+```r
+# [1] 3368   11
+```
+
+```r
+R[1,]
+```
+
+```r
+# [1] "PM2 Don Rey > SJC 730-79 > BRT 103-182"
+```
+
+```r
+R[3368,]
+```
+
+```r
+# [1] "Local > SJC 730-79"
+```
+
++++
+
+### Plackett-Luce Tree
+
+The rankings are grouped by farm/farmer
+
+
+```r
+G <- grouped_rankings(R, rep(seq_len(nrow(beans)), 4))
+format(head(G, 2), width = 50)
+```
+
+```r
+#                                                                   1 
+#  "PM2 Don Rey > SJC 730-79 > BRT 103-182, Local > BRT 103-182, ..." 
+#                                                                   2 
+# "INTA Centro Sur > INTA Sequia > INTA Rojo, Local > INTA Rojo, ..."
+```
+
+A tree with max depth 3 and at least 5% records in each group
+
+
+```r
+beans$year <- factor(beans$year)
+tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
+               minsize = 0.05*n, maxdepth = 3)
+```
+
++++
+
+### Plotting Tree
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+
+---
+
+## Summary
+
+Future work
+ - Incorporating spatial effects
+ - Incorporating genotype information
+ 
+More details
+ - **PlackettLuce** is on CRAN and GitHub
+ - Full details of the methods and further examples in the vignette
