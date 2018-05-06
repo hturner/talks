@@ -1,0 +1,18 @@
+/* two-column layout (N.B. plots will fill to fit) */
+.reveal .left {
+    float: left; z-index: -10; width: 50%;
+}
+.reveal .right {
+    float: right; z-index: -10; width: 50%;
+}
+/* no border round images */
+.reveal .slides section img
+{
+    border: none;
+    box-shadow: none;
+}
+
+/* no margin round images (control via plot par!) */
+.left>img {
+    margin: 0;
+}

@@ -1,29 +1,55 @@
 ---
+title: Modelling Item Worth Based on Rankings
+author: |
+ | *Heather Turner*, Freelance/University of Warwick, UK
+ | Jacob van Etten, Bioversity International, Costa Rica
+ | David Firth, University of Warwick/Alan Turing Institute, UK
+ | Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
+date: May 15 2018
+output: 
+  revealjs::revealjs_presentation:
+    keep_md: true
+    theme: white
+    transition : none
+    css: custom.css
+    slide_level: 1
+    self_contained: false
+    reveal_plugins: ["zoom", "notes", "menu"]
+    reveal_options:
+      menu:
+        numbers: false
+        themes: true
+---
 
-@color[#4286f4](@size[1em](Modelling Item Worth Based on Rankings))
-
-*Heather Turner*, Freelance/University of Warwick, UK
-Jacob van Etten, Bioversity International, Costa Rica
-David Firth, University of Warwick/Alan Turing Institute, UK
-Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
-
-May 15 2018
+<style type="text/css">
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+</style>
 
 
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE, dev = "png", dpi = 300,
                comment = "#")
-# so R comments also treated as R code 
-# (and highlighted as a comment!)               
-knit_hooks$set(output = function(x, options) {
-    paste("```r\n", x, "```\n", sep = "")
-})           
+knit_hooks$set(plot = function(x, options) {
+    cap <- options$fig.cap
+    base <- opts_knit$get("base.url")
+    if (is.null(base)) base <- ""
+    sprintf("![%s](%s%s) \\", cap, base,
+            opts_knit$get("upload.fun")(x))
+}) 
 ```
 
 ---
 
-## Rankings
+# Rankings
 
 Rankings arise in a number of settings
 
@@ -34,7 +60,7 @@ What is the worth of each item?
 
 ---
 
-## Luce's Axiom
+# Luce's Axiom
 
 > Probability of choosing item A over item B unaffected by other items 
 
@@ -44,28 +70,27 @@ $$S = \{i_1, i_2, \ldots, i_J\}$$
 
 Then under Luce's axiom
 
-`$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$`
+$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$
 
-where `$\alpha_i$` represents the **worth** of item $i$.
+where $\alpha_i$ represents the **worth** of item $i$.
 
 ---
 
-## Plackett-Luce Model
+# Plackett-Luce Model
 
 Consider a ranking of $J$ items as a sequence of choices.
 
 The *Plackett-Luce* model is then
 
-`$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$`
+$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$
 
 where $A_j$ is the set of alternatives in choice $j$.
 
 **PlackettLuce** can be used to fit this model.
 
 ---
-@title[Neflix data]
 
-## Example 1: Netflix Data
+# Example 1: Netflix Data
 
 For the Netflix Prize, Netflix released several data sets 
 comprising movie rankings.
@@ -81,9 +106,9 @@ netflix <- read.soc(file.path(preflib,
 head(netflix, 2)
 ```
 
-+++
+---
 
-### Convert to Rankings
+## Convert to Rankings
 
 **PlackettLuce** requires the rankings to give the rank per item 
 vs. item per rank.
@@ -99,7 +124,7 @@ print(R[1:3], width = 60)
 
 ---
 
-### Fit Plackett-Luce Model
+## Fit Plackett-Luce Model
 
 Now `PlackettLuce` can be used to fit the model, with frequencies 
 as weights
@@ -114,7 +139,7 @@ probability that each movie is ranked first.
 
 ---
 
-### Inference
+## Inference
 
 For inference it is better to work on the log scale. We must set one item as the reference (log-worth = 0).
 
@@ -127,7 +152,7 @@ plot(qv, ylab = "Worth (log)", main = NULL)
 
 ---
 
-## Ranking properties
+# Ranking properties
 
 The Netflix rankings are an example of *strict*, *complete*
 rankings.
@@ -143,7 +168,7 @@ ties and sub-rankings.
 
 ---
 
-## Generalized Model
+# Generalized Model
 
 A ranking is now an ordering of sets 
 
@@ -151,26 +176,26 @@ $$C_1 \succ C_2 \succ \ldots \succ C_J$$
 
 and the generalized model with ties up to order $D$ is
 
-`$$
+$$
 \prod_{j = 1}^J \frac{f(C_j)}{
 \sum_{k = 1}^{\min(D_j, D)} \sum_{S \in {A_j \choose k}} f(S)}
-$$`
+$$
 
 where
 
-`$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$`
+$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$
 
 ---
 
-## Ranking Networks
+# Ranking Networks
 
 In some cases, the underlying network of wins and losses means 
 the worth cannot be estimated by maximum likelihood.
 
-@div[left-50]
+<div class="left">
 
 ```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis", fig.cap = "Network in which one item always loses"}
-par(mar = rep(1, 4))
+par(mar = c(4, 2, 0, 2))
 library(igraph)
 R <- matrix(c(1, 2, 0, 0,
               2, 0, 1, 0,
@@ -184,12 +209,12 @@ net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
 ```
 
-@divend
+</div>
 
-@div[right-50]
+<div class="right">
 
 ```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis", fig.cap = "Network with two separate groups of items, that are only observed to win or lose against other items in their group"}
-par(mar = rep(1, 4))
+par(mar = c(4, 2, 0, 2))
 R <- matrix(c(1, 2, 0, 0, 0, 
               2, 0, 1, 0, 0,
               0, 1, 2, 0, 0,
@@ -203,31 +228,27 @@ plot(net, edge.arrow.size = 0.5, vertex.size = 30,
      frame = TRUE)
 ```
 
-
-
-@divend
+</div>
 
 ---
 
-## Pseudo-rankings
+# Pseudo-rankings
 
 **PlackettLuce** connects the network by adding `npseudo` 
 *pseudo-rankings* with a ghost item.
 
-@div[left-50]
+<div class="left">
 
-@ul
 - The MLE is always estimable
 - Can be viewed as a Bayesian prior
 - Default `nspeudo = 0.5`
-@ulend
 
-@divend
+</div>
 
-@div[right-50]
+<div class="right">
 
 ```{r pseudo-rankings, fig.width = 3.5, fig.height = 3.5, echo = FALSE, results = "asis", fig.cap = "Network with pseudo-rankings, in which each item wins and loses against ghost item"}
-par(mar = rep(1, 4))
+par(mar = c(4, 2, 0, 2))
 R <- matrix(c(0, 0, 0, 1, 2,
               0, 0, 0, 2, 1,
               0, 0, 1, 0, 2,
@@ -249,11 +270,11 @@ V(net)$color <- c(rep("#E69F00", 4), "#84aae8")
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
 ```
 
-@divend
+</div>
 
 ---
 
-## Heterogeneity
+# Heterogeneity
 
 The worth of items may vary with the ranking conditions, e.g. 
 judge making the ranking.
@@ -268,7 +289,7 @@ sub-group too small.
 
 ---
 
-## Example 2: Beans
+# Example 2: Beans
 
 Data from a citizen science trial of bean varieties in Nicaragua:
 
@@ -281,9 +302,9 @@ Data from a citizen science trial of bean varieties in Nicaragua:
      - Year
      - Maximum night-time temperature
      
-+++
+---
 
-### Example 2: Beans
+## Example 2: Beans
 
 The example on `?beans` tidies the original data
 ```{r}
@@ -304,9 +325,9 @@ R[1,]
 R[3368,]
 ```
 
-+++
+---
 
-### Plackett-Luce Tree
+## Plackett-Luce Tree
 
 The rankings are grouped by farm/farmer
 
@@ -323,17 +344,17 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
                minsize = 0.05*n, maxdepth = 3)
 ```
 
-+++
+---
 
-### Plotting Tree
+## Plotting Tree
 
-```{r, results = "none", fig.width = 10, echo = FALSE}
+```{r pltree, message = FALSE, fig.width = 10, echo = FALSE, fig.cap = "Item worth estimates within each node of the Plackett-Luce tree."}
 plot(tree, names = FALSE, abbreviate = 2)
 ```
 
 ---
 
-## Summary
+# Summary
 
 Future work
  - Incorporating spatial effects

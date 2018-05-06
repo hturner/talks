@@ -1,20 +1,44 @@
 ---
+title: Modelling Item Worth Based on Rankings
+author: |
+ | *Heather Turner*, Freelance/University of Warwick, UK
+ | Jacob van Etten, Bioversity International, Costa Rica
+ | David Firth, University of Warwick/Alan Turing Institute, UK
+ | Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
+date: May 15 2018
+output: 
+  revealjs::revealjs_presentation:
+    keep_md: true
+    theme: white
+    transition : none
+    css: custom.css
+    slide_level: 1
+    self_contained: false
+    reveal_plugins: ["zoom", "notes", "menu"]
+    reveal_options:
+      menu:
+        numbers: false
+        themes: true
+---
 
-@color[#4286f4](@size[1em](Modelling Item Worth Based on Rankings))
-
-*Heather Turner*, Freelance/University of Warwick, UK
-Jacob van Etten, Bioversity International, Costa Rica
-David Firth, University of Warwick/Alan Turing Institute, UK
-Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
-
-May 15 2018
+<style type="text/css">
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+</style>
 
 
 
 
 ---
 
-## Rankings
+# Rankings
 
 Rankings arise in a number of settings
 
@@ -25,7 +49,7 @@ What is the worth of each item?
 
 ---
 
-## Luce's Axiom
+# Luce's Axiom
 
 > Probability of choosing item A over item B unaffected by other items 
 
@@ -35,28 +59,27 @@ $$S = \{i_1, i_2, \ldots, i_J\}$$
 
 Then under Luce's axiom
 
-`$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$`
+$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$
 
-where `$\alpha_i$` represents the **worth** of item $i$.
+where $\alpha_i$ represents the **worth** of item $i$.
 
 ---
 
-## Plackett-Luce Model
+# Plackett-Luce Model
 
 Consider a ranking of $J$ items as a sequence of choices.
 
 The *Plackett-Luce* model is then
 
-`$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$`
+$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$
 
 where $A_j$ is the set of alternatives in choice $j$.
 
 **PlackettLuce** can be used to fit this model.
 
 ---
-@title[Neflix data]
 
-## Example 1: Netflix Data
+# Example 1: Netflix Data
 
 For the Netflix Prize, Netflix released several data sets 
 comprising movie rankings.
@@ -73,15 +96,15 @@ netflix <- read.soc(file.path(preflib,
 head(netflix, 2)
 ```
 
-```r
+```
 #    n Rank 1 Rank 2 Rank 3 Rank 4
 # 1 68      2      1      4      3
 # 2 53      1      2      4      3
 ```
 
-+++
+---
 
-### Convert to Rankings
+## Convert to Rankings
 
 **PlackettLuce** requires the rankings to give the rank per item 
 vs. item per rank.
@@ -96,7 +119,7 @@ colnames(R) <- attr(netflix, "item")
 print(R[1:3], width = 60)
 ```
 
-```r
+```
 #                                                              1 
 # "Beverly Hills Cop > Mean Girls > Mission: Impossible II  ..." 
 #                                                              2 
@@ -107,7 +130,7 @@ print(R[1:3], width = 60)
 
 ---
 
-### Fit Plackett-Luce Model
+## Fit Plackett-Luce Model
 
 Now `PlackettLuce` can be used to fit the model, with frequencies 
 as weights
@@ -118,7 +141,7 @@ mod <- PlackettLuce(R, weights = netflix$n)
 coef(mod, log = FALSE)
 ```
 
-```r
+```
 #             Mean Girls      Beverly Hills Cop      The Mummy Returns 
 #              0.2306285              0.4510655              0.1684719 
 # Mission: Impossible II 
@@ -130,7 +153,7 @@ probability that each movie is ranked first.
 
 ---
 
-### Inference
+## Inference
 
 For inference it is better to work on the log scale. We must set one item as the reference (log-worth = 0).
 
@@ -142,11 +165,11 @@ qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
 ```
 
-![Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.](figure/qvcalc-1.png)
+![Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.](modelling_item_worth_files/figure-revealjs/qvcalc-1.png) \
 
 ---
 
-## Ranking properties
+# Ranking properties
 
 The Netflix rankings are an example of *strict*, *complete*
 rankings.
@@ -162,7 +185,7 @@ ties and sub-rankings.
 
 ---
 
-## Generalized Model
+# Generalized Model
 
 A ranking is now an ordering of sets 
 
@@ -170,62 +193,58 @@ $$C_1 \succ C_2 \succ \ldots \succ C_J$$
 
 and the generalized model with ties up to order $D$ is
 
-`$$
+$$
 \prod_{j = 1}^J \frac{f(C_j)}{
 \sum_{k = 1}^{\min(D_j, D)} \sum_{S \in {A_j \choose k}} f(S)}
-$$`
+$$
 
 where
 
-`$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$`
+$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$
 
 ---
 
-## Ranking Networks
+# Ranking Networks
 
 In some cases, the underlying network of wins and losses means 
 the worth cannot be estimated by maximum likelihood.
 
-@div[left-50]
+<div class="left">
 
-<img src="figure/always-loses-1.png" title="Network in which one item always loses" alt="Network in which one item always loses" width="300px" />
+![Network in which one item always loses](modelling_item_worth_files/figure-revealjs/always-loses-1.png) \
 
-@divend
+</div>
 
-@div[right-50]
+<div class="right">
 
-<img src="figure/disconnected-1.png" title="Network with two separate groups of items, that are only observed to win or lose against other items in their group" alt="Network with two separate groups of items, that are only observed to win or lose against other items in their group" width="300px" />
+![Network with two separate groups of items, that are only observed to win or lose against other items in their group](modelling_item_worth_files/figure-revealjs/disconnected-1.png) \
 
-
-
-@divend
+</div>
 
 ---
 
-## Pseudo-rankings
+# Pseudo-rankings
 
 **PlackettLuce** connects the network by adding `npseudo` 
 *pseudo-rankings* with a ghost item.
 
-@div[left-50]
+<div class="left">
 
-@ul
 - The MLE is always estimable
 - Can be viewed as a Bayesian prior
 - Default `nspeudo = 0.5`
-@ulend
 
-@divend
+</div>
 
-@div[right-50]
+<div class="right">
 
-![Network with pseudo-rankings, in which each item wins and loses against ghost item](figure/pseudo-rankings-1.png)
+![Network with pseudo-rankings, in which each item wins and loses against ghost item](modelling_item_worth_files/figure-revealjs/pseudo-rankings-1.png) \
 
-@divend
+</div>
 
 ---
 
-## Heterogeneity
+# Heterogeneity
 
 The worth of items may vary with the ranking conditions, e.g. 
 judge making the ranking.
@@ -240,7 +259,7 @@ sub-group too small.
 
 ---
 
-## Example 2: Beans
+# Example 2: Beans
 
 Data from a citizen science trial of bean varieties in Nicaragua:
 
@@ -253,9 +272,9 @@ Data from a citizen science trial of bean varieties in Nicaragua:
      - Year
      - Maximum night-time temperature
      
-+++
+---
 
-### Example 2: Beans
+## Example 2: Beans
 
 The example on `?beans` tidies the original data
 
@@ -269,7 +288,7 @@ The original data are organised with one row per farm/farmer
 dim(beans)
 ```
 
-```r
+```
 # [1] 842  12
 ```
 
@@ -277,7 +296,7 @@ dim(beans)
 names(beans)
 ```
 
-```r
+```
 #  [1] "variety_a" "variety_b" "variety_c" "best"      "worst"    
 #  [6] "var_a"     "var_b"     "var_c"     "season"    "year"     
 # [11] "maxTN"     "middle"
@@ -290,7 +309,7 @@ The 3-way and 2-way rankings are collated in a rankings object
 dim(R)
 ```
 
-```r
+```
 # [1] 3368   11
 ```
 
@@ -298,7 +317,7 @@ dim(R)
 R[1,]
 ```
 
-```r
+```
 # [1] "PM2 Don Rey > SJC 730-79 > BRT 103-182"
 ```
 
@@ -306,13 +325,13 @@ R[1,]
 R[3368,]
 ```
 
-```r
+```
 # [1] "Local > SJC 730-79"
 ```
 
-+++
+---
 
-### Plackett-Luce Tree
+## Plackett-Luce Tree
 
 The rankings are grouped by farm/farmer
 
@@ -322,7 +341,7 @@ G <- grouped_rankings(R, rep(seq_len(nrow(beans)), 4))
 format(head(G, 2), width = 50)
 ```
 
-```r
+```
 #                                                                   1 
 #  "PM2 Don Rey > SJC 730-79 > BRT 103-182, Local > BRT 103-182, ..." 
 #                                                                   2 
@@ -338,15 +357,15 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
                minsize = 0.05*n, maxdepth = 3)
 ```
 
-+++
+---
 
-### Plotting Tree
+## Plotting Tree
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![Item worth estimates within each node of the Plackett-Luce tree.](modelling_item_worth_files/figure-revealjs/pltree-1.png) \
 
 ---
 
-## Summary
+# Summary
 
 Future work
  - Incorporating spatial effects
