@@ -1,10 +1,10 @@
 ---
 title: Modelling Item Worth Based on Rankings
 author: |
- | *Heather Turner*, Freelance/University of Warwick, UK
- | Jacob van Etten, Bioversity International, Costa Rica
- | David Firth, University of Warwick/Alan Turing Institute, UK
- | Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
+ | <br>**Heather Turner**, Freelance/University of Warwick, UK <br>
+ | Jacob van Etten, Bioversity International, Costa Rica <br>
+ | David Firth, University of Warwick/Alan Turing Institute, UK <br>
+ | Ioannis Kosmidis, University of Warwick/Alan Turing Institute, UK <br><br>
 date: May 15 2018
 output: 
   revealjs::revealjs_presentation:
@@ -21,22 +21,8 @@ output:
         themes: true
 ---
 
-<style type="text/css">
-  .reveal p {
-    text-align: left;
-  }
-  .reveal ul {
-    display: block;
-  }
-  .reveal ol {
-    display: block;
-  }
-</style>
 
 
-
-
----
 
 # Rankings
 
@@ -81,8 +67,7 @@ where $A_j$ is the set of alternatives in choice $j$.
 
 # Example 1: Netflix Data
 
-For the Netflix Prize, Netflix released several data sets 
-comprising movie rankings.
+Netflix released movie rankings for the Netflix Prize.
 
 Using `read.soc` from **PlackettLuce**, we read in a set of 
 rankings for 4 movies
@@ -142,10 +127,10 @@ coef(mod, log = FALSE)
 ```
 
 ```
-#             Mean Girls      Beverly Hills Cop      The Mummy Returns 
-#              0.2306285              0.4510655              0.1684719 
-# Mission: Impossible II 
-#              0.1498342
+#             Mean Girls      Beverly Hills Cop 
+#                 0.2306                 0.4511 
+#      The Mummy Returns Mission: Impossible II 
+#                 0.1685                 0.1498
 ```
 
 These coefficients are the *worth* parameters and represent the 
@@ -155,9 +140,7 @@ probability that each movie is ranked first.
 
 ## Inference
 
-For inference it is better to work on the log scale. We must set one item as the reference (log-worth = 0).
-
-We can use `qvcalc` to compute comparison intervals for all items
+For inference it is better to work on the log scale. Comparison intervals can be computed via `qvcalc`.
 
 
 ```r
@@ -187,11 +170,9 @@ ties and sub-rankings.
 
 # Generalized Model
 
-A ranking is now an ordering of sets 
+Now consider a ranking of sets $C_1 \succ C_2 \succ \ldots \succ C_J$.
 
-$$C_1 \succ C_2 \succ \ldots \succ C_J$$
-
-and the generalized model with ties up to order $D$ is
+The generalized model with ties up to order $D$ is
 
 $$
 \prod_{j = 1}^J \frac{f(C_j)}{
@@ -261,7 +242,7 @@ sub-group too small.
 
 # Example 2: Beans
 
-Data from a citizen science trial of bean varieties in Nicaragua:
+A citizen science trial of bean varieties in Nicaragua:
 
  - 11 bean varieties 
  - Each farmer grew 3 varieties
@@ -282,36 +263,10 @@ The example on `?beans` tidies the original data
 example("beans", package = "PlackettLuce", echo = FALSE)
 ```
 
-The original data are organised with one row per farm/farmer
-
-```r
-dim(beans)
-```
-
-```
-# [1] 842  12
-```
-
-```r
-names(beans)
-```
-
-```
-#  [1] "variety_a" "variety_b" "variety_c" "best"      "worst"    
-#  [6] "var_a"     "var_b"     "var_c"     "season"    "year"     
-# [11] "maxTN"     "middle"
-```
+The original `beans` data frame has 842 rows: one per farm.
 
 The 3-way and 2-way rankings are collated in a rankings object
 
-
-```r
-dim(R)
-```
-
-```
-# [1] 3368   11
-```
 
 ```r
 R[1,]
@@ -333,11 +288,11 @@ R[3368,]
 
 ## Plackett-Luce Tree
 
-The rankings are grouped by farm/farmer
+The rankings are grouped by farm
 
 
 ```r
-G <- grouped_rankings(R, rep(seq_len(nrow(beans)), 4))
+G <- grouped_rankings(R, rep(1:nrow(beans), 4))
 format(head(G, 2), width = 50)
 ```
 

@@ -1,10 +1,10 @@
 ---
 title: Modelling Item Worth Based on Rankings
 author: |
- | *Heather Turner*, Freelance/University of Warwick, UK
- | Jacob van Etten, Bioversity International, Costa Rica
- | David Firth, University of Warwick/Alan Turing Institute, UK
- | Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
+ | <br>**Heather Turner**, Freelance/University of Warwick, UK <br>
+ | Jacob van Etten, Bioversity International, Costa Rica <br>
+ | David Firth, University of Warwick/Alan Turing Institute, UK <br>
+ | Ioannis Kosmidis, University of Warwick/Alan Turing Institute, UK <br><br>
 date: May 15 2018
 output: 
   revealjs::revealjs_presentation:
@@ -21,23 +21,14 @@ output:
         themes: true
 ---
 
-<style type="text/css">
-  .reveal p {
-    text-align: left;
-  }
-  .reveal ul {
-    display: block;
-  }
-  .reveal ol {
-    display: block;
-  }
-</style>
-
 
 ```{r setup, include=FALSE}
+options(digits = 4)
+options(width = 67)
 library(knitr)
 opts_chunk$set(echo = TRUE, dev = "png", dpi = 300,
                comment = "#")
+# add \ after markdown img link so alt text not shown as caption
 knit_hooks$set(plot = function(x, options) {
     cap <- options$fig.cap
     base <- opts_knit$get("base.url")
@@ -45,9 +36,11 @@ knit_hooks$set(plot = function(x, options) {
     sprintf("![%s](%s%s) \\", cap, base,
             opts_knit$get("upload.fun")(x))
 }) 
+# trim white space top and right of plot
+knit_hooks$set(small.mar = function(before, options, envir) {
+    if (before) par(mar = c(4, 8, .1, 4))
+})
 ```
-
----
 
 # Rankings
 
@@ -92,8 +85,7 @@ where $A_j$ is the set of alternatives in choice $j$.
 
 # Example 1: Netflix Data
 
-For the Netflix Prize, Netflix released several data sets 
-comprising movie rankings.
+Netflix released movie rankings for the Netflix Prize.
 
 Using `read.soc` from **PlackettLuce**, we read in a set of 
 rankings for 4 movies
@@ -141,11 +133,9 @@ probability that each movie is ranked first.
 
 ## Inference
 
-For inference it is better to work on the log scale. We must set one item as the reference (log-worth = 0).
+For inference it is better to work on the log scale. Comparison intervals can be computed via `qvcalc`.
 
-We can use `qvcalc` to compute comparison intervals for all items
-
-```{r qvcalc, fig.cap = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies."}
+```{r qvcalc, fig.cap = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.", small.mar = TRUE, fig.width = 9.8, fig.height = 4}
 qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL)
 ```
@@ -170,11 +160,9 @@ ties and sub-rankings.
 
 # Generalized Model
 
-A ranking is now an ordering of sets 
+Now consider a ranking of sets $C_1 \succ C_2 \succ \ldots \succ C_J$.
 
-$$C_1 \succ C_2 \succ \ldots \succ C_J$$
-
-and the generalized model with ties up to order $D$ is
+The generalized model with ties up to order $D$ is
 
 $$
 \prod_{j = 1}^J \frac{f(C_j)}{
@@ -291,7 +279,7 @@ sub-group too small.
 
 # Example 2: Beans
 
-Data from a citizen science trial of bean varieties in Nicaragua:
+A citizen science trial of bean varieties in Nicaragua:
 
  - 11 bean varieties 
  - Each farmer grew 3 varieties
@@ -311,16 +299,11 @@ The example on `?beans` tidies the original data
 example("beans", package = "PlackettLuce", echo = FALSE)
 ```
 
-The original data are organised with one row per farm/farmer
-```{r}
-dim(beans)
-names(beans)
-```
+The original `beans` data frame has 842 rows: one per farm.
 
 The 3-way and 2-way rankings are collated in a rankings object
 
 ```{r}
-dim(R)
 R[1,]
 R[3368,]
 ```
@@ -329,10 +312,10 @@ R[3368,]
 
 ## Plackett-Luce Tree
 
-The rankings are grouped by farm/farmer
+The rankings are grouped by farm
 
 ```{r}
-G <- grouped_rankings(R, rep(seq_len(nrow(beans)), 4))
+G <- grouped_rankings(R, rep(1:nrow(beans), 4))
 format(head(G, 2), width = 50)
 ```
 

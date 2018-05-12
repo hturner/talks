@@ -504,27 +504,13 @@ document.getElementsByTagName('head')[0].appendChild(style);
 
 <section>
     <h1 class="title">Modelling Item Worth Based on Rankings</h1>
-    <h2 class="author"><div class="line-block"><em>Heather Turner</em>, Freelance/University of Warwick, UK
-Jacob van Etten, Bioversity International, Costa Rica
-David Firth, University of Warwick/Alan Turing Institute, UK
-Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK</div></h2>
+    <h2 class="author"><div class="line-block"><br><strong>Heather Turner</strong>, Freelance/University of Warwick, UK <br>
+Jacob van Etten, Bioversity International, Costa Rica <br>
+David Firth, University of Warwick/Alan Turing Institute, UK <br>
+Ioannis Kosmidis, University of Warwick/Alan Turing Institute, UK <br><br></div></h2>
     <h3 class="date">May 15 2018</h3>
 </section>
 
-<section class="slide level1">
-
-<style type="text/css">
-  .reveal p {
-    text-align: left;
-  }
-  .reveal ul {
-    display: block;
-  }
-  .reveal ol {
-    display: block;
-  }
-</style>
-</section>
 <section id="rankings" class="slide level1">
 <h1>Rankings</h1>
 <p>Rankings arise in a number of settings</p>
@@ -555,7 +541,7 @@ Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK</div></h2>
 </section>
 <section id="example-1-netflix-data" class="slide level1">
 <h1>Example 1: Netflix Data</h1>
-<p>For the Netflix Prize, Netflix released several data sets comprising movie rankings.</p>
+<p>Netflix released movie rankings for the Netflix Prize.</p>
 <p>Using <code>read.soc</code> from <strong>PlackettLuce</strong>, we read in a set of rankings for 4 movies</p>
 <pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(PlackettLuce)</div>
 <div class="sourceLine" id="cb1-2" data-line-number="2">preflib &lt;-<span class="st"> &quot;http://www.preflib.org/data/election/&quot;</span></div>
@@ -587,17 +573,16 @@ Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK</div></h2>
 <p>Now <code>PlackettLuce</code> can be used to fit the model, with frequencies as weights</p>
 <pre class="sourceCode r" id="cb5"><code class="sourceCode r"><div class="sourceLine" id="cb5-1" data-line-number="1">mod &lt;-<span class="st"> </span><span class="kw">PlackettLuce</span>(R, <span class="dt">weights =</span> netflix<span class="op">$</span>n)</div>
 <div class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">coef</span>(mod, <span class="dt">log =</span> <span class="ot">FALSE</span>)</div></code></pre>
-<pre><code>#             Mean Girls      Beverly Hills Cop      The Mummy Returns 
-#              0.2306285              0.4510655              0.1684719 
-# Mission: Impossible II 
-#              0.1498342</code></pre>
+<pre><code>#             Mean Girls      Beverly Hills Cop 
+#                 0.2306                 0.4511 
+#      The Mummy Returns Mission: Impossible II 
+#                 0.1685                 0.1498</code></pre>
 <p>These coefficients are the <em>worth</em> parameters and represent the probability that each movie is ranked first.</p>
 </section>
 <section class="slide level1">
 
 <h2 id="inference">Inference</h2>
-<p>For inference it is better to work on the log scale. We must set one item as the reference (log-worth = 0).</p>
-<p>We can use <code>qvcalc</code> to compute comparison intervals for all items</p>
+<p>For inference it is better to work on the log scale. Comparison intervals can be computed via <code>qvcalc</code>.</p>
 <pre class="sourceCode r" id="cb7"><code class="sourceCode r"><div class="sourceLine" id="cb7-1" data-line-number="1">qv &lt;-<span class="st"> </span><span class="kw">qvcalc</span>(mod)</div>
 <div class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">plot</span>(qv, <span class="dt">ylab =</span> <span class="st">&quot;Worth (log)&quot;</span>, <span class="dt">main =</span> <span class="ot">NULL</span>)</div></code></pre>
 <p><img data-src="modelling_item_worth_files/figure-revealjs/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies." /><br />
@@ -611,9 +596,8 @@ Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK</div></h2>
 </section>
 <section id="generalized-model" class="slide level1">
 <h1>Generalized Model</h1>
-<p>A ranking is now an ordering of sets</p>
-<p><span class="math display">\[C_1 \succ C_2 \succ \ldots \succ C_J\]</span></p>
-<p>and the generalized model with ties up to order <span class="math inline">\(D\)</span> is</p>
+<p>Now consider a ranking of sets <span class="math inline">\(C_1 \succ C_2 \succ \ldots \succ C_J\)</span>.</p>
+<p>The generalized model with ties up to order <span class="math inline">\(D\)</span> is</p>
 <p><span class="math display">\[
 \prod_{j = 1}^J \frac{f(C_j)}{
 \sum_{k = 1}^{\min(D_j, D)} \sum_{S \in {A_j \choose k}} f(S)}
@@ -661,7 +645,7 @@ Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK</div></h2>
 </section>
 <section id="example-2-beans" class="slide level1">
 <h1>Example 2: Beans</h1>
-<p>Data from a citizen science trial of bean varieties in Nicaragua:</p>
+<p>A citizen science trial of bean varieties in Nicaragua:</p>
 <ul>
 <li>11 bean varieties</li>
 <li>Each farmer grew 3 varieties
@@ -682,35 +666,27 @@ Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK</div></h2>
 <h2 id="example-2-beans-1">Example 2: Beans</h2>
 <p>The example on <code>?beans</code> tidies the original data</p>
 <pre class="sourceCode r" id="cb8"><code class="sourceCode r"><div class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">example</span>(<span class="st">&quot;beans&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;PlackettLuce&quot;</span>, <span class="dt">echo =</span> <span class="ot">FALSE</span>)</div></code></pre>
-<p>The original data are organised with one row per farm/farmer</p>
-<pre class="sourceCode r" id="cb9"><code class="sourceCode r"><div class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">dim</span>(beans)</div></code></pre>
-<pre><code># [1] 842  12</code></pre>
-<pre class="sourceCode r" id="cb11"><code class="sourceCode r"><div class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">names</span>(beans)</div></code></pre>
-<pre><code>#  [1] &quot;variety_a&quot; &quot;variety_b&quot; &quot;variety_c&quot; &quot;best&quot;      &quot;worst&quot;    
-#  [6] &quot;var_a&quot;     &quot;var_b&quot;     &quot;var_c&quot;     &quot;season&quot;    &quot;year&quot;     
-# [11] &quot;maxTN&quot;     &quot;middle&quot;</code></pre>
+<p>The original <code>beans</code> data frame has 842 rows: one per farm.</p>
 <p>The 3-way and 2-way rankings are collated in a rankings object</p>
-<pre class="sourceCode r" id="cb13"><code class="sourceCode r"><div class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">dim</span>(R)</div></code></pre>
-<pre><code># [1] 3368   11</code></pre>
-<pre class="sourceCode r" id="cb15"><code class="sourceCode r"><div class="sourceLine" id="cb15-1" data-line-number="1">R[<span class="dv">1</span>,]</div></code></pre>
+<pre class="sourceCode r" id="cb9"><code class="sourceCode r"><div class="sourceLine" id="cb9-1" data-line-number="1">R[<span class="dv">1</span>,]</div></code></pre>
 <pre><code># [1] &quot;PM2 Don Rey &gt; SJC 730-79 &gt; BRT 103-182&quot;</code></pre>
-<pre class="sourceCode r" id="cb17"><code class="sourceCode r"><div class="sourceLine" id="cb17-1" data-line-number="1">R[<span class="dv">3368</span>,]</div></code></pre>
+<pre class="sourceCode r" id="cb11"><code class="sourceCode r"><div class="sourceLine" id="cb11-1" data-line-number="1">R[<span class="dv">3368</span>,]</div></code></pre>
 <pre><code># [1] &quot;Local &gt; SJC 730-79&quot;</code></pre>
 </section>
 <section class="slide level1">
 
 <h2 id="plackett-luce-tree">Plackett-Luce Tree</h2>
-<p>The rankings are grouped by farm/farmer</p>
-<pre class="sourceCode r" id="cb19"><code class="sourceCode r"><div class="sourceLine" id="cb19-1" data-line-number="1">G &lt;-<span class="st"> </span><span class="kw">grouped_rankings</span>(R, <span class="kw">rep</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(beans)), <span class="dv">4</span>))</div>
-<div class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">format</span>(<span class="kw">head</span>(G, <span class="dv">2</span>), <span class="dt">width =</span> <span class="dv">50</span>)</div></code></pre>
+<p>The rankings are grouped by farm</p>
+<pre class="sourceCode r" id="cb13"><code class="sourceCode r"><div class="sourceLine" id="cb13-1" data-line-number="1">G &lt;-<span class="st"> </span><span class="kw">grouped_rankings</span>(R, <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(beans), <span class="dv">4</span>))</div>
+<div class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">format</span>(<span class="kw">head</span>(G, <span class="dv">2</span>), <span class="dt">width =</span> <span class="dv">50</span>)</div></code></pre>
 <pre><code>#                                                                   1 
 #  &quot;PM2 Don Rey &gt; SJC 730-79 &gt; BRT 103-182, Local &gt; BRT 103-182, ...&quot; 
 #                                                                   2 
 # &quot;INTA Centro Sur &gt; INTA Sequia &gt; INTA Rojo, Local &gt; INTA Rojo, ...&quot;</code></pre>
 <p>A tree with max depth 3 and at least 5% records in each group</p>
-<pre class="sourceCode r" id="cb21"><code class="sourceCode r"><div class="sourceLine" id="cb21-1" data-line-number="1">beans<span class="op">$</span>year &lt;-<span class="st"> </span><span class="kw">factor</span>(beans<span class="op">$</span>year)</div>
-<div class="sourceLine" id="cb21-2" data-line-number="2">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> beans[<span class="kw">c</span>(<span class="st">&quot;season&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;maxTN&quot;</span>)],</div>
-<div class="sourceLine" id="cb21-3" data-line-number="3">               <span class="dt">minsize =</span> <span class="fl">0.05</span><span class="op">*</span>n, <span class="dt">maxdepth =</span> <span class="dv">3</span>)</div></code></pre>
+<pre class="sourceCode r" id="cb15"><code class="sourceCode r"><div class="sourceLine" id="cb15-1" data-line-number="1">beans<span class="op">$</span>year &lt;-<span class="st"> </span><span class="kw">factor</span>(beans<span class="op">$</span>year)</div>
+<div class="sourceLine" id="cb15-2" data-line-number="2">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> beans[<span class="kw">c</span>(<span class="st">&quot;season&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;maxTN&quot;</span>)],</div>
+<div class="sourceLine" id="cb15-3" data-line-number="3">               <span class="dt">minsize =</span> <span class="fl">0.05</span><span class="op">*</span>n, <span class="dt">maxdepth =</span> <span class="dv">3</span>)</div></code></pre>
 </section>
 <section class="slide level1">
 
