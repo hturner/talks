@@ -7,7 +7,7 @@
 <b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
 Jacob van Etten, Bioversity International, Costa Rica<br>
 David Firth, University of Warwick/Alan Turing Institute, UK<br>
-Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
+Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK<br><br>
 
 <b>May 15 2018</b>
 </span>
@@ -333,7 +333,7 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 plot(tree, names = FALSE, abbreviate = 2)
 ```
 
-<img src="figure/pltree-1.png" alt="Item worth estimates within each node of the Plackett-Luce tree" style=" display: block; margin-top:0;margin-left: auto;margin-right: auto;width = 80%">
+<img src="figure/pltree-1.png" alt="Item worth estimates within each node of the Plackett-Luce tree" style=" display: block; margin-top:0;margin-left: auto;margin-right: auto" width = "80%">
 
 ---
 
