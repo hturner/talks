@@ -158,6 +158,7 @@ The Netflix rankings are an example of *strict*, *complete*
 rankings.
 
 In other applications we might have
+
  * tied ranks
  * incomplete rankings
      - *sub-rankings*: only some items ranked each time
@@ -303,7 +304,8 @@ format(head(G, 2), width = 50)
 # "INTA Centro Sur > INTA Sequia > INTA Rojo, Local > INTA Rojo, ..."
 ```
 
-A tree with max depth 3 and at least 5% records in each group
+Use `pltree` to fit a tree with max depth 3 and $\ge$ 5% records in
+each group
 
 
 ```r
@@ -323,9 +325,11 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 # Summary
 
 Future work
+
  - Incorporating spatial effects
  - Incorporating genotype information
  
 More details
+
  - **PlackettLuce** is on CRAN and GitHub
  - Full details of the methods and further examples in the vignette
