@@ -2,12 +2,14 @@
 
 # Modelling Item Worth Based on Rankings
 
-<center>
-<b>Heather Turner</b>, Freelance/University of Warwick, UK
-Jacob van Etten, Bioversity International, Costa Rica
-David Firth, University of Warwick/Alan Turing Institute, UK
+<center style = "font-size: 0.9em">
+<b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
+Jacob van Etten, Bioversity International, Costa Rica<br>
+David Firth, University of Warwick/Alan Turing Institute, UK<br>
 Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
+<\center>
 
+<center style = "font-size: 0.9em">
 May 15 2018
 <\center>
 
@@ -310,7 +312,9 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 
 ## Plotting Tree
 
-![Item worth estimates within each node of the Plackett-Luce tree.](figure/pltree-1.png) \
+
+
+<img src="figure/pltree-1.png" alt="Item worth estimates within each node of the Plackett-Luce tree" width = 85%>
 
 ---
 
