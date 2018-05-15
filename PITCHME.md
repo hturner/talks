@@ -142,7 +142,7 @@ qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL, cex = 1.5, pch = 19)
 ```
 
-<img src="figure/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.">
+<img src="figure/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies." width = "95%">
 
 ---
 
