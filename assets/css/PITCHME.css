@@ -97,6 +97,10 @@
     text-align: center;
 }
 
+.reveal h2 {
+    font-size: 1.4em;
+}
+
 .reveal ol li {
     margin: 0 0 0 1em;
     font-size: 0.85em;

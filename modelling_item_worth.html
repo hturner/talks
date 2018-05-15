@@ -691,7 +691,7 @@ Ioannis Kosmidis, University of Warwick/Alan Turing Institute, UK <br><br></div>
 #  &quot;PM2 Don Rey &gt; SJC 730-79 &gt; BRT 103-182, Local &gt; BRT 103-182, ...&quot; 
 #                                                                   2 
 # &quot;INTA Centro Sur &gt; INTA Sequia &gt; INTA Rojo, Local &gt; INTA Rojo, ...&quot;</code></pre>
-<p>Use <code>pltree</code> to fit a tree with max depth 3 and <span class="math inline">\(\ge\)</span> 5% records in each group</p>
+<p>Use <code>pltree</code> with max depth 3 and <span class="math inline">\(\ge\)</span> 5% records in each group</p>
 <pre class="sourceCode r" id="cb15"><code class="sourceCode r"><div class="sourceLine" id="cb15-1" data-line-number="1">beans<span class="op">$</span>year &lt;-<span class="st"> </span><span class="kw">factor</span>(beans<span class="op">$</span>year)</div>
 <div class="sourceLine" id="cb15-2" data-line-number="2">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> beans[<span class="kw">c</span>(<span class="st">&quot;season&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;maxTN&quot;</span>)],</div>
 <div class="sourceLine" id="cb15-3" data-line-number="3">               <span class="dt">minsize =</span> <span class="fl">0.05</span><span class="op">*</span>n, <span class="dt">maxdepth =</span> <span class="dv">3</span>)</div></code></pre>

@@ -2,16 +2,16 @@
 
 # Modelling Item Worth Based on Rankings
 
-<center style = "font-size: 0.9em">
+<center>
+<span style = "font-size: 0.9em">
 <b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
 Jacob van Etten, Bioversity International, Costa Rica<br>
 David Firth, University of Warwick/Alan Turing Institute, UK<br>
 Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
-<\center>
 
-<center style = "font-size: 0.9em">
-May 15 2018
-<\center>
+<b>May 15 2018</b>
+</span>
+</center>
 
 
 
@@ -298,8 +298,7 @@ format(head(G, 2), width = 50)
 # "INTA Centro Sur > INTA Sequia > INTA Rojo, Local > INTA Rojo, ..."
 ```
 
-Use `pltree` to fit a tree with max depth 3 and `$\ge$` 5% records in
-each group
+Use `pltree` with max depth 3 and `$\ge$` 5% records in each group
 
 
 ```r
@@ -314,7 +313,7 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 
 
 
-<img src="figure/pltree-1.png" alt="Item worth estimates within each node of the Plackett-Luce tree" width = 85%>
+<img src="figure/pltree-1.png" alt="Item worth estimates within each node of the Plackett-Luce tree" style=" display: block; margin-top:0;margin-left: auto;margin-right: auto;width = 80%">
 
 ---
 
