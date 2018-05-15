@@ -1,8 +1,8 @@
 ---
 
-@color[#4286f4](@size[1em](Modelling Item Worth Based on Rankings))
+# Modelling Item Worth Based on Rankings
 
-*Heather Turner*, Freelance/University of Warwick, UK
+**Heather Turner**, Freelance/University of Warwick, UK
 Jacob van Etten, Bioversity International, Costa Rica
 David Firth, University of Warwick/Alan Turing Institute, UK
 Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
