@@ -142,7 +142,7 @@ qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL, cex = 1.5, pch = 19)
 ```
 
-![Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.](figure/qvcalc-1.png) \
+<img src="figure/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.">
 
 ---
 
@@ -187,13 +187,13 @@ the worth cannot be estimated by maximum likelihood.
 
 <div class="left">
 
-![Network in which one item always loses](figure/always-loses-1.png) \
+<img src="figure/always-loses-1.png" alt="Network in which one item always loses">
 
 </div>
 
 <div class="right">
 
-![Network with two separate groups of items, that are only observed to win or lose against other items in their group](figure/disconnected-1.png) \
+<img src="figure/disconnected-1.png" alt="Network with two separate groups of items, that are only observed to win or lose against other items in their group">
 
 </div>
 
@@ -214,7 +214,7 @@ the worth cannot be estimated by maximum likelihood.
 
 <div class="right">
 
-![Network with pseudo-rankings, in which each item wins and loses against ghost item](figure/pseudo-rankings-1.png) \
+<img src="figure/pseudo-rankings-1.png" alt="Network with pseudo-rankings, in which each item wins and loses against ghost item">
 
 </div>
 

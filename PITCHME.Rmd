@@ -24,8 +24,8 @@ knit_hooks$set(plot = function(x, options) {
     cap <- options$fig.cap
     base <- opts_knit$get("base.url")
     if (is.null(base)) base <- ""
-    sprintf("![%s](%s%s) \\", cap, base,
-            opts_knit$get("upload.fun")(x))
+    paste0('<img src="', base, opts_knit$get("upload.fun")(x),
+     '" alt="', cap, '">')
 }) 
 # trim white space top and right of plot
 knit_hooks$set(small.mar = function(before, options, envir) {
