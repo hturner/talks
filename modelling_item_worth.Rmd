@@ -320,8 +320,7 @@ G <- grouped_rankings(R, rep(1:nrow(beans), 4))
 format(head(G, 2), width = 50)
 ```
 
-Use `pltree` to fit a tree with max depth 3 and $\ge$ 5% records in
-each group
+Use `pltree` with max depth 3 and $\ge$ 5% records in each group
 
 ```{r, cache = TRUE}
 beans$year <- factor(beans$year)

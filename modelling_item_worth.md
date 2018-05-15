@@ -304,8 +304,7 @@ format(head(G, 2), width = 50)
 # "INTA Centro Sur > INTA Sequia > INTA Rojo, Local > INTA Rojo, ..."
 ```
 
-Use `pltree` to fit a tree with max depth 3 and $\ge$ 5% records in
-each group
+Use `pltree` with max depth 3 and $\ge$ 5% records in each group
 
 
 ```r
