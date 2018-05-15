@@ -3,8 +3,8 @@
 # Modelling Item Worth Based on Rankings
 
 <center>
-<span style = "font-size: 0.9em">
-<b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
+<span style = "font-size: 0.85em">
+<br><b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
 Jacob van Etten, Bioversity International, Costa Rica<br>
 David Firth, University of Warwick/Alan Turing Institute, UK<br>
 Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK<br><br>
@@ -15,6 +15,7 @@ Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK<br><br>
 
 
 ```{r setup, include=FALSE}
+options(digits = 4)
 library(knitr)
 opts_chunk$set(echo = TRUE, dev = "png", dpi = 300,
                comment = "#")
@@ -134,7 +135,7 @@ For inference it is better to work on the log scale. Comparison intervals can be
 
 ```{r qvcalc, fig.cap = "Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.", small.mar = TRUE, fig.width = 9.8, fig.height = 4}
 qv <- qvcalc(mod)
-plot(qv, ylab = "Worth (log)", main = NULL)
+plot(qv, ylab = "Worth (log)", main = NULL, cex = 1.5, pch = 19)
 ```
 
 ---
@@ -341,10 +342,10 @@ plot(tree, names = FALSE, abbreviate = 2)
 
 Future work
 
- - Incorporating spatial effects
- - Incorporating genotype information
+- Incorporating spatial effects
+- Incorporating genotype information
  
 More details
 
- - **PlackettLuce** is on CRAN and GitHub
- - Full details of the methods and further examples in the vignette
+- **PlackettLuce** is on CRAN and GitHub
+- Full details of the methods and further examples in the vignette

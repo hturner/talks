@@ -584,7 +584,7 @@ Ioannis Kosmidis, University of Warwick/Alan Turing Institute, UK <br><br></div>
 <h2 id="inference">Inference</h2>
 <p>For inference it is better to work on the log scale. Comparison intervals can be computed via <code>qvcalc</code>.</p>
 <pre class="sourceCode r" id="cb7"><code class="sourceCode r"><div class="sourceLine" id="cb7-1" data-line-number="1">qv &lt;-<span class="st"> </span><span class="kw">qvcalc</span>(mod)</div>
-<div class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">plot</span>(qv, <span class="dt">ylab =</span> <span class="st">&quot;Worth (log)&quot;</span>, <span class="dt">main =</span> <span class="ot">NULL</span>)</div></code></pre>
+<div class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">plot</span>(qv, <span class="dt">ylab =</span> <span class="st">&quot;Worth (log)&quot;</span>, <span class="dt">main =</span> <span class="ot">NULL</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</div></code></pre>
 <p><img data-src="modelling_item_worth_files/figure-revealjs/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies." /><br />
 </p>
 </section>
@@ -706,8 +706,12 @@ Ioannis Kosmidis, University of Warwick/Alan Turing Institute, UK <br><br></div>
 <h1>Summary</h1>
 <p>Future work</p>
 <ul>
-<li>Incorporating spatial effects</li>
-<li>Incorporating genotype information</li>
+<li>
+Incorporating spatial effects
+</li>
+<li>
+Incorporating genotype information
+</li>
 </ul>
 <p>More details</p>
 <ul>

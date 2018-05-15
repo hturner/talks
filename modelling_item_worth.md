@@ -145,7 +145,7 @@ For inference it is better to work on the log scale. Comparison intervals can be
 
 ```r
 qv <- qvcalc(mod)
-plot(qv, ylab = "Worth (log)", main = NULL)
+plot(qv, ylab = "Worth (log)", main = NULL, cex = 1.5, pch = 19)
 ```
 
 ![Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.](modelling_item_worth_files/figure-revealjs/qvcalc-1.png) \
@@ -325,10 +325,12 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 
 Future work
 
- - Incorporating spatial effects
- - Incorporating genotype information
+<ul>
+<li>Incorporating spatial effects</li>
+<li>Incorporating genotype information</li>
+</ul>
  
 More details
 
- - **PlackettLuce** is on CRAN and GitHub
- - Full details of the methods and further examples in the vignette
+- **PlackettLuce** is on CRAN and GitHub
+- Full details of the methods and further examples in the vignette

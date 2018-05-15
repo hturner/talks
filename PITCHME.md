@@ -3,8 +3,8 @@
 # Modelling Item Worth Based on Rankings
 
 <center>
-<span style = "font-size: 0.9em">
-<b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
+<span style = "font-size: 0.85em">
+<br><b>Heather Turner</b>, Freelance/University of Warwick, UK<br>
 Jacob van Etten, Bioversity International, Costa Rica<br>
 David Firth, University of Warwick/Alan Turing Institute, UK<br>
 Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK<br><br>
@@ -122,9 +122,9 @@ coef(mod, log = FALSE)
 
 ```r
 #             Mean Girls      Beverly Hills Cop      The Mummy Returns 
-#              0.2306285              0.4510655              0.1684719 
+#                 0.2306                 0.4511                 0.1685 
 # Mission: Impossible II 
-#              0.1498342
+#                 0.1498
 ```
 
 These coefficients are the *worth* parameters and represent the 
@@ -139,7 +139,7 @@ For inference it is better to work on the log scale. Comparison intervals can be
 
 ```r
 qv <- qvcalc(mod)
-plot(qv, ylab = "Worth (log)", main = NULL)
+plot(qv, ylab = "Worth (log)", main = NULL, cex = 1.5, pch = 19)
 ```
 
 ![Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.](figure/qvcalc-1.png) \
@@ -321,10 +321,10 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 
 Future work
 
- - Incorporating spatial effects
- - Incorporating genotype information
+- Incorporating spatial effects
+- Incorporating genotype information
  
 More details
 
- - **PlackettLuce** is on CRAN and GitHub
- - Full details of the methods and further examples in the vignette
+- **PlackettLuce** is on CRAN and GitHub
+- Full details of the methods and further examples in the vignette
