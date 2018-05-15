@@ -2,12 +2,14 @@
 
 # Modelling Item Worth Based on Rankings
 
-**Heather Turner**, Freelance/University of Warwick, UK
+<center>
+<b>Heather Turner</b>, Freelance/University of Warwick, UK
 Jacob van Etten, Bioversity International, Costa Rica
 David Firth, University of Warwick/Alan Turing Institute, UK
 Ioannis Kosmidis,University of Warwick/Alan Turing Institute, UK
 
 May 15 2018
+<\center>
 
 
 ```{r setup, include=FALSE}
@@ -35,7 +37,7 @@ knit_hooks$set(output = function(x, options) {
 
 ---
 
-# Rankings
+## Rankings
 
 Rankings arise in a number of settings
 
@@ -46,37 +48,37 @@ What is the worth of each item?
 
 ---
 
-# Luce's Axiom
+## Luce's Axiom
 
 > Probability of choosing item A over item B unaffected by other items 
 
-Suppose we have a set of $J$ items
+Suppose we have a set of `$J$` items
 
-$$S = \{i_1, i_2, \ldots, i_J\}$$
+`$$S = \{i_1, i_2, \ldots, i_J\}$$`
 
 Then under Luce's axiom
 
-$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$
+`$$P(j | S) = \frac{\alpha_{j}}{\sum_{i \in S} \alpha_i}$$`
 
-where $\alpha_i$ represents the **worth** of item $i$.
+where `$\alpha_i$` represents the **worth** of item `$i$`.
 
 ---
 
-# Plackett-Luce Model
+## Plackett-Luce Model
 
-Consider a ranking of $J$ items as a sequence of choices.
+Consider a ranking of `$J$` items as a sequence of choices.
 
 The *Plackett-Luce* model is then
 
-$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$
+`$$P(i_1 \succ \ldots \succ i_J) = \prod_{j=1}^J\frac{\alpha_{i_j}}{\sum_{i \in A_j} \alpha_i}$$`
 
-where $A_j$ is the set of alternatives in choice $j$.
+where `$A_j$` is the set of alternatives in choice `$j$`.
 
 **PlackettLuce** can be used to fit this model.
 
 ---
 
-# Example 1: Netflix Data
+## Example 1: Netflix Data
 
 Netflix released movie rankings for the Netflix Prize.
 
@@ -135,7 +137,7 @@ plot(qv, ylab = "Worth (log)", main = NULL)
 
 ---
 
-# Ranking properties
+## Ranking properties
 
 The Netflix rankings are an example of *strict*, *complete*
 rankings.
@@ -145,31 +147,31 @@ In other applications we might have
  * tied ranks
  * incomplete rankings
      - *sub-rankings*: only some items ranked each time
-     - *top-n*: only the top $n$ items are ranked
+     - *top-n*: only the top `$n$` items are ranked
      
 **PlackettLuce** implements a generalized model which handles 
 ties and sub-rankings.
 
 ---
 
-# Generalized Model
+## Generalized Model
 
-Now consider a ranking of sets $C_1 \succ C_2 \succ \ldots \succ C_J$.
+Now consider a ranking of sets `$C_1 \succ C_2 \succ \ldots \succ C_J$`.
 
-The generalized model with ties up to order $D$ is
+The generalized model with ties up to order `$D$` is
 
-$$
+`$$
 \prod_{j = 1}^J \frac{f(C_j)}{
 \sum_{k = 1}^{\min(D_j, D)} \sum_{S \in {A_j \choose k}} f(S)}
-$$
+$$`
 
 where
 
-$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$
+`$$f(S) = \delta_{|S|} \left(\prod_{i \in S} \alpha_i \right)^\frac{1}{|S|}$$`
 
 ---
 
-# Ranking Networks
+## Ranking Networks
 
 In some cases, the underlying network of wins and losses means 
 the worth cannot be estimated by maximum likelihood.
@@ -214,17 +216,17 @@ plot(net, edge.arrow.size = 0.5, vertex.size = 30,
 
 ---
 
-# Pseudo-rankings
+## Pseudo-rankings
 
 **PlackettLuce** connects the network by adding `npseudo` 
 *pseudo-rankings* with a ghost item.
 
 <div class="left">
-
-- The MLE is always estimable
-- Can be viewed as a Bayesian prior
-- Default `nspeudo = 0.5`
-
+<ul>
+<li>The MLE is always estimable</li>
+<li>Can be viewed as a Bayesian prior</li>
+<li>Default `nspeudo = 0.5`</li>
+</ul>
 </div>
 
 <div class="right">
@@ -256,7 +258,7 @@ plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
 
 ---
 
-# Heterogeneity
+## Heterogeneity
 
 The worth of items may vary with the ranking conditions, e.g. 
 judge making the ranking.
@@ -271,7 +273,7 @@ sub-group too small.
 
 ---
 
-# Example 2: Beans
+## Example 2: Beans
 
 A citizen science trial of bean varieties in Nicaragua:
 
@@ -313,7 +315,7 @@ G <- grouped_rankings(R, rep(1:nrow(beans), 4))
 format(head(G, 2), width = 50)
 ```
 
-Use `pltree` to fit a tree with max depth 3 and $\ge$ 5% records in
+Use `pltree` to fit a tree with max depth 3 and `$\ge$` 5% records in
 each group
 
 ```{r, cache = TRUE}
@@ -327,12 +329,13 @@ tree <- pltree(G ~ ., data = beans[c("season", "year", "maxTN")],
 ## Plotting Tree
 
 ```{r pltree, message = FALSE, fig.width = 10, echo = FALSE, fig.cap = "Item worth estimates within each node of the Plackett-Luce tree."}
+par(mar = c(4, 2, 0, 2))
 plot(tree, names = FALSE, abbreviate = 2)
 ```
 
 ---
 
-# Summary
+## Summary
 
 Future work
 

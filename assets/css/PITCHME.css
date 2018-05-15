@@ -90,3 +90,14 @@
     line-height: 1.3;
     font-size: 0.85em;
 }
+
+.reveal h1 {
+    font-size: 2em;
+    text-shadow: none;
+    text-align: center;
+}
+
+.reveal ol li {
+    margin: 0 0 0 1em;
+    font-size: 0.85em;
+}
