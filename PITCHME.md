@@ -142,7 +142,7 @@ qv <- qvcalc(mod)
 plot(qv, ylab = "Worth (log)", main = NULL, cex = 1.5, pch = 19)
 ```
 
-<img src="figure/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies." width = "95%">
+<img src="figure/qvcalc-1.png" alt="Plot of estimated log-worth for each movie, with 95% comparison interval. Beverly Hills Cop is significantly more popular than the other three movies, Mean Girls is significant more popular than The Mummy Returns or Mission: Impossible II, but there was no significant difference in users’ preference for these last two movies.">
 
 ---
 
@@ -185,17 +185,17 @@ where
 In some cases, the underlying network of wins and losses means 
 the worth cannot be estimated by maximum likelihood.
 
-<div class="left">
+@div[left-50]
 
 <img src="figure/always-loses-1.png" alt="Network in which one item always loses">
 
-</div>
+@divend
 
-<div class="right">
+@div[right-50]
 
 <img src="figure/disconnected-1.png" alt="Network with two separate groups of items, that are only observed to win or lose against other items in their group">
 
-</div>
+@divend
 
 ---
 

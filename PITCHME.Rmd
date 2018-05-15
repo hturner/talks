@@ -179,7 +179,7 @@ where
 In some cases, the underlying network of wins and losses means 
 the worth cannot be estimated by maximum likelihood.
 
-<div class="left">
+@div[left-50]
 
 ```{r always-loses, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis", fig.cap = "Network in which one item always loses"}
 par(mar = c(4, 2, 0, 2))
@@ -196,9 +196,9 @@ net <- graph_from_adjacency_matrix(A)
 plot(net, edge.arrow.size = 0.5, vertex.size = 30, frame = TRUE)
 ```
 
-</div>
+@divend
 
-<div class="right">
+@div[right-50]
 
 ```{r disconnected, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 3.5, out.width = "300px", echo = FALSE, results = "asis", fig.cap = "Network with two separate groups of items, that are only observed to win or lose against other items in their group"}
 par(mar = c(4, 2, 0, 2))
@@ -215,7 +215,7 @@ plot(net, edge.arrow.size = 0.5, vertex.size = 30,
      frame = TRUE)
 ```
 
-</div>
+@divend
 
 ---
 
